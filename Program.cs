@@ -29,6 +29,9 @@ namespace DIO.bank
                     case "5":
                         Depositar();
                         break;
+                    case "6":
+                        MostrarSaldo();
+                        break;
                     case "C":
                         Console.Clear(); 
                         break;
@@ -40,6 +43,18 @@ namespace DIO.bank
             Console.WriteLine("Obrigado por utilizar nossos serviços.");
             Console.ReadLine();
         }
+        private static void MostrarSaldo()
+        {
+        Console.WriteLine("Saldo");
+        Console.Write("Digite o número da conta de origem: ");
+			int i = int.Parse(Console.ReadLine());
+            Conta conta = listContas[i];
+            Console.Write("#{0} - ", i);
+            Console.WriteLine(conta);
+        }
+        
+
+  
 
         private static void Depositar()
         {
@@ -126,6 +141,7 @@ namespace DIO.bank
             Console.WriteLine("3- Trasnferir");
             Console.WriteLine("4- Sacar");
             Console.WriteLine("5- Depositar");
+            Console.WriteLine("6- Mostrar Saldo");
             Console.WriteLine("C- Limpar Tela");
             Console.WriteLine("X- Sair");
             Console.WriteLine();

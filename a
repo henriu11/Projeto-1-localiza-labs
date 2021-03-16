@@ -1,0 +1,715 @@
+[33mcommit 1a69e56f6a8b90c5314780d952ef407a08a18ba9[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: henriu11 <lucashmr2@gmail.com>
+Date:   Mon Mar 15 18:53:15 2021 -0300
+
+    project 1 DIO labs
+
+[1mdiff --git a/.vscode/launch.json b/.vscode/launch.json[m
+[1mnew file mode 100644[m
+[1mindex 0000000..23a3f55[m
+[1m--- /dev/null[m
+[1m+++ b/.vscode/launch.json[m
+[36m@@ -0,0 +1,27 @@[m
+[32m+[m[32m{[m
+[32m+[m[32m    "version": "0.2.0",[m
+[32m+[m[32m    "configurations": [[m
+[32m+[m[32m        {[m
+[32m+[m[32m            // Use IntelliSense to find out which attributes exist for C# debugging[m
+[32m+[m[32m            // Use hover for the description of the existing attributes[m
+[32m+[m[32m            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md[m
+[32m+[m[32m            "name": ".NET Core Launch (console)",[m
+[32m+[m[32m            "type": "coreclr",[m
+[32m+[m[32m            "request": "launch",[m
+[32m+[m[32m            "preLaunchTask": "build",[m
+[32m+[m[32m            // If you have changed target frameworks, make sure to update the program path.[m
+[32m+[m[32m            "program": "${workspaceFolder}/bin/Debug/net5.0/DIO.bank.dll",[m
+[32m+[m[32m            "args": [],[m
+[32m+[m[32m            "cwd": "${workspaceFolder}",[m
+[32m+[m[32m            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console[m
+[32m+[m[32m            "console": "internalConsole",[m
+[32m+[m[32m            "stopAtEntry": false[m
+[32m+[m[32m        },[m
+[32m+[m[32m        {[m
+[32m+[m[32m            "name": ".NET Core Attach",[m
+[32m+[m[32m            "type": "coreclr",[m
+[32m+[m[32m            "request": "attach",[m
+[32m+[m[32m            "processId": "${command:pickProcess}"[m
+[32m+[m[32m        }[m
+[32m+[m[32m    ][m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/.vscode/tasks.json b/.vscode/tasks.json[m
+[1mnew file mode 100644[m
+[1mindex 0000000..28fe119[m
+[1m--- /dev/null[m
+[1m+++ b/.vscode/tasks.json[m
+[36m@@ -0,0 +1,42 @@[m
+[32m+[m[32m{[m
+[32m+[m[32m    "version": "2.0.0",[m
+[32m+[m[32m    "tasks": [[m
+[32m+[m[32m        {[m
+[32m+[m[32m            "label": "build",[m
+[32m+[m[32m            "command": "dotnet",[m
+[32m+[m[32m            "type": "process",[m
+[32m+[m[32m            "args": [[m
+[32m+[m[32m                "build",[m
+[32m+[m[32m                "${workspaceFolder}/DIO.bank.csproj",[m
+[32m+[m[32m                "/property:GenerateFullPaths=true",[m
+[32m+[m[32m                "/consoleloggerparameters:NoSummary"[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "problemMatcher": "$msCompile"[m
+[32m+[m[32m        },[m
+[32m+[m[32m        {[m
+[32m+[m[32m            "label": "publish",[m
+[32m+[m[32m            "command": "dotnet",[m
+[32m+[m[32m            "type": "process",[m
+[32m+[m[32m            "args": [[m
+[32m+[m[32m                "publish",[m
+[32m+[m[32m                "${workspaceFolder}/DIO.bank.csproj",[m
+[32m+[m[32m                "/property:GenerateFullPaths=true",[m
+[32m+[m[32m                "/consoleloggerparameters:NoSummary"[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "problemMatcher": "$msCompile"[m
+[32m+[m[32m        },[m
+[32m+[m[32m        {[m
+[32m+[m[32m            "label": "watch",[m
+[32m+[m[32m            "command": "dotnet",[m
+[32m+[m[32m            "type": "process",[m
+[32m+[m[32m            "args": [[m
+[32m+[m[32m                "watch",[m
+[32m+[m[32m                "run",[m
+[32m+[m[32m                "${workspaceFolder}/DIO.bank.csproj",[m
+[32m+[m[32m                "/property:GenerateFullPaths=true",[m
+[32m+[m[32m                "/consoleloggerparameters:NoSummary"[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "problemMatcher": "$msCompile"[m
+[32m+[m[32m        }[m
+[32m+[m[32m    ][m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/CLASSES/Conta.cs b/CLASSES/Conta.cs[m
+[1mnew file mode 100644[m
+[1mindex 0000000..639992c[m
+[1m--- /dev/null[m
+[1m+++ b/CLASSES/Conta.cs[m
+[36m@@ -0,0 +1,57 @@[m
+[32m+[m[32musing System;[m
+[32m+[m
+[32m+[m
+[32m+[m[32mnamespace DIO.bank[m
+[32m+[m[32m{[m
+[32m+[m[32m    public class Conta[m
+[32m+[m[32m    {[m
+[32m+[m[32m        private TipoConta TipoConta { get; set; }[m
+[32m+[m[32m        private double Saldo { get; set; }[m
+[32m+[m[32m        private double Credito { get; set; }[m
+[32m+[m[32m        private string Nome { get; set; }[m
+[32m+[m[32m        public Conta(TipoConta tipoConta, double saldo, double credito, string nome)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            this.TipoConta= tipoConta;[m
+[32m+[m[32m            this.Saldo= saldo;[m
+[32m+[m[32m            this.Credito= credito;[m
+[32m+[m[32m            this.Nome= nome;[m
+[32m+[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        public bool Sacar(double valorSaque)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            //validar saldo sufuciente[m
+[32m+[m[32m            if(this.Saldo - valorSaque <this.Credito*-1)[m
+[32m+[m[32m            {[m
+[32m+[m[32m                Console.WriteLine("insuficente");[m
+[32m+[m[32m                return false;[m
+[32m+[m[32m            }[m[41m       [m
+[32m+[m[32m            this.Saldo -= valorSaque;[m
+[32m+[m
+[32m+[m[32m            Console.WriteLine("Saldo altual da conta de {0} É {1}", this.Nome, this.Saldo);[m
+[32m+[m[32m            return true;[m
+[32m+[m[32m        }[m[41m      [m
+[32m+[m[32m        public void Depositar(double valorDeposito)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            this.Saldo += valorDeposito;[m
+[32m+[m[32m            Console.WriteLine("Saldo altual da conta de {0} É {1}", this.Nome, this.Saldo);[m
+[32m+[m[32m        }[m
+[32m+[m[32m        public void Transferir(double valorTransferencia, Conta contaDestino)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            //validar sado sufuciente[m
+[32m+[m[32m            if (this.Sacar(valorTransferencia))[m
+[32m+[m[32m            {[m
+[32m+[m[32m                contaDestino.Depositar(valorTransferencia);[m
+[32m+[m[32m            }[m
+[32m+[m[32m        }[m[41m  [m
+[32m+[m[32m        public override string ToString()[m
+[32m+[m[32m        {[m
+[32m+[m[32m            string retorno = "";[m
+[32m+[m[32m            retorno +="Tipoonta" + this.TipoConta + "|";[m
+[32m+[m[32m            retorno +="Nome" + this.Nome + "|";[m
+[32m+[m[32m            retorno +="Saldo" + this.Saldo + "|";[m
+[32m+[m[32m            retorno +="Crédito" + this.Credito + "|";[m
+[32m+[m[32m            return retorno;[m
+[32m+[m[32m        }[m[41m                [m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/CLASSES/TipoConta.cs b/CLASSES/TipoConta.cs[m
+[1mnew file mode 100644[m
+[1mindex 0000000..112dd75[m
+[1m--- /dev/null[m
+[1m+++ b/CLASSES/TipoConta.cs[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32mnamespace DIO.bank[m
+[32m+[m[32m{[m
+[32m+[m[32m    public enum TipoConta[m
+[32m+[m[32m    {[m
+[32m+[m[32m        PessoaFisica =1,[m
+[32m+[m[32m        PessoaJuridica =2,[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/DIO.bank.csproj b/DIO.bank.csproj[m
+[1mnew file mode 100644[m
+[1mindex 0000000..2082704[m
+[1m--- /dev/null[m
+[1m+++ b/DIO.bank.csproj[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32m<Project Sdk="Microsoft.NET.Sdk">[m
+[32m+[m
+[32m+[m[32m  <PropertyGroup>[m
+[32m+[m[32m    <OutputType>Exe</OutputType>[m
+[32m+[m[32m    <TargetFramework>net5.0</TargetFramework>[m
+[32m+[m[32m  </PropertyGroup>[m
+[32m+[m
+[32m+[m[32m</Project>[m
+[1mdiff --git a/Program.cs b/Program.cs[m
+[1mnew file mode 100644[m
+[1mindex 0000000..877dd3d[m
+[1m--- /dev/null[m
+[1m+++ b/Program.cs[m
+[36m@@ -0,0 +1,138 @@[m
+[32m+[m[32m﻿using System;[m
+[32m+[m[32musing System.Collections.Generic;[m
+[32m+[m
+[32m+[m[32mnamespace DIO.bank[m
+[32m+[m[32m{[m
+[32m+[m[32m    class Program[m
+[32m+[m[32m    {[m
+[32m+[m[32m        static List<Conta> listContas = new List<Conta>();[m
+[32m+[m[32m        static void Main(string[] args)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            string opcaoUsuario = ObterOpcaoUsuario();[m
+[32m+[m
+[32m+[m[32m            while (opcaoUsuario.ToUpper() != "X")[m
+[32m+[m[32m            {[m
+[32m+[m[32m                switch (opcaoUsuario)[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    case "1":[m
+[32m+[m[32m                        ListarContas();[m
+[32m+[m[32m                        break;[m
+[32m+[m[32m                    case "2":[m
+[32m+[m[32m                        InserirConta();[m
+[32m+[m[32m                        break;[m
+[32m+[m[32m                    case "3":[m
+[32m+[m[32m                        Transferir();[m
+[32m+[m[32m                        break;[m
+[32m+[m[32m                    case "4":[m
+[32m+[m[32m                        Sacar();[m
+[32m+[m[32m                        break;[m
+[32m+[m[32m                    case "5":[m
+[32m+[m[32m                        Depositar();[m
+[32m+[m[32m                        break;[m
+[32m+[m[32m                    case "C":[m
+[32m+[m[32m                        Console.Clear();[m[41m [m
+[32m+[m[32m                        break;[m
+[32m+[m[32m                    default:[m
+[32m+[m[32m                    throw new ArgumentOutOfRangeException();[m[41m                  [m
+[32m+[m[32m                }[m
+[32m+[m[32m                opcaoUsuario = ObterOpcaoUsuario();[m
+[32m+[m[32m            }[m
+[32m+[m[32m            Console.WriteLine("Obrigado por utilizar nossos serviços.");[m
+[32m+[m[32m            Console.ReadLine();[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        private static void Depositar()[m
+[32m+[m[32m        {[m
+[32m+[m[32m            Console.Write("Digite o número da conta: ");[m
+[32m+[m			[32mint indiceConta = int.Parse(Console.ReadLine());[m
+[32m+[m
+[32m+[m			[32mConsole.Write("Digite o valor a ser depositado: ");[m
+[32m+[m			[32mdouble valorDeposito = double.Parse(Console.ReadLine());[m
+[32m+[m
+[32m+[m[32m            listContas[indiceConta].Depositar(valorDeposito);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        private static void Transferir()[m
+[32m+[m[32m        {[m
+[32m+[m[32m           Console.Write("Digite o número da conta de origem: ");[m
+[32m+[m			[32mint indiceContaOrigem = int.Parse(Console.ReadLine());[m
+[32m+[m
+[32m+[m[32m            Console.Write("Digite o número da conta de destino: ");[m
+[32m+[m			[32mint indiceContaDestino = int.Parse(Console.ReadLine());[m
+[32m+[m
+[32m+[m			[32mConsole.Write("Digite o valor a ser transferido: ");[m
+[32m+[m			[32mdouble valorTransferencia = double.Parse(Console.ReadLine());[m
+[32m+[m
+[32m+[m[32m            listContas[indiceContaOrigem].Transferir(valorTransferencia, listContas[indiceContaDestino]);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        private static void Sacar()[m
+[32m+[m[32m        {[m
+[32m+[m[32m            Console.Write("Dufuta o número da conta: ");[m
+[32m+[m[32m            int indiceConta = int.Parse(Console.ReadLine());[m
+[32m+[m[32m            Console.Write("Dufuta o número da conta: ");[m
+[32m+[m[32m            double valorDeposito = double.Parse(Console.ReadLine());[m
+[32m+[m[32m            listContas[indiceConta].Sacar(valorDeposito);[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        private static void ListarContas()[m
+[32m+[m[32m        {[m
+[32m+[m[32m        Console.WriteLine("listar conta");[m
+[32m+[m[32m        if(listContas.Count == 0)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            Console.WriteLine("Nenhuma conta cadastrada");[m
+[32m+[m[32m        }[m
+[32m+[m[32m        for(int i = 0; i< listContas.Count;i++)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            Conta conta = listContas[i];[m
+[32m+[m[32m            Console.Write("#{0} - ", i);[m
+[32m+[m[32m            Console.WriteLine(conta);[m
+[32m+[m[32m        }[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        private static void InserirConta()[m
+[32m+[m[32m        {[m
+[32m+[m[32m            Console.WriteLine("Inserir nova conta");[m
+[32m+[m
+[32m+[m			[32mConsole.Write("Digite 1 para Conta Fisica ou 2 para Juridica: ");[m
+[32m+[m			[32mint entradaTipoConta = int.Parse(Console.ReadLine());[m
+[32m+[m
+[32m+[m			[32mConsole.Write("Digite o Nome do Cliente: ");[m
+[32m+[m			[32mstring entradaNome = Console.ReadLine();[m
+[32m+[m
+[32m+[m			[32mConsole.Write("Digite o saldo inicial: ");[m
+[32m+[m			[32mdouble entradaSaldo = double.Parse(Console.ReadLine());[m
+[32m+[m
+[32m+[m			[32mConsole.Write("Digite o crédito: ");[m
+[32m+[m			[32mdouble entradaCredito = double.Parse(Console.ReadLine());[m
+[32m+[m
+[32m+[m			[32mConta novaConta = new Conta(tipoConta: (TipoConta)entradaTipoConta,[m
+[32m+[m										[32msaldo: entradaSaldo,[m
+[32m+[m										[32mcredito: entradaCredito,[m
+[32m+[m										[32mnome: entradaNome);[m
+[32m+[m
+[32m+[m			[32mlistContas.Add(novaConta);[m
+[32m+[m[32m        }[m
+[32m+[m[41m        [m
+[32m+[m
+[32m+[m[32m        private static string ObterOpcaoUsuario()[m
+[32m+[m[32m        {[m
+[32m+[m[32m            Console.WriteLine();[m
+[32m+[m[32m            Console.WriteLine("DIO Bank a seu dispor!!!");[m
+[32m+[m[32m            Console.WriteLine("Informe a opção desejada: ");[m
+[32m+[m
+[32m+[m[32m            Console.WriteLine("1- Listar contas");[m
+[32m+[m[32m            Console.WriteLine("2- Inserir nova conta");[m
+[32m+[m[32m            Console.WriteLine("3- Trasnferir");[m
+[32m+[m[32m            Console.WriteLine("4- Sacar");[m
+[32m+[m[32m            Console.WriteLine("5- Depositar");[m
+[32m+[m[32m            Console.WriteLine("C- Limpar Tela");[m
+[32m+[m[32m            Console.WriteLine("X- Sair");[m
+[32m+[m[32m            Console.WriteLine();[m
+[32m+[m
+[32m+[m[32m            string opcaoUsuario = Console.ReadLine().ToUpper();[m
+[32m+[m[32m            Console.WriteLine();[m
+[32m+[m[32m            return opcaoUsuario;[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/bin/Debug/net5.0/DIO.bank.deps.json b/bin/Debug/net5.0/DIO.bank.deps.json[m
+[1mnew file mode 100644[m
+[1mindex 0000000..7c11603[m
+[1m--- /dev/null[m
+[1m+++ b/bin/Debug/net5.0/DIO.bank.deps.json[m
+[36m@@ -0,0 +1,23 @@[m
+[32m+[m[32m{[m
+[32m+[m[32m  "runtimeTarget": {[m
+[32m+[m[32m    "name": ".NETCoreApp,Version=v5.0",[m
+[32m+[m[32m    "signature": ""[m
+[32m+[m[32m  },[m
+[32m+[m[32m  "compilationOptions": {},[m
+[32m+[m[32m  "targets": {[m
+[32m+[m[32m    ".NETCoreApp,Version=v5.0": {[m
+[32m+[m[32m      "DIO.bank/1.0.0": {[m
+[32m+[m[32m        "runtime": {[m
+[32m+[m[32m          "DIO.bank.dll": {}[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m[32m  },[m
+[32m+[m[32m  "libraries": {[m
+[32m+[m[32m    "DIO.bank/1.0.0": {[m
+[32m+[m[32m      "type": "project",[m
+[32m+[m[32m      "serviceable": false,[m
+[32m+[m[32m      "sha512": ""[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/bin/Debug/net5.0/DIO.bank.dll b/bin/Debug/net5.0/DIO.bank.dll[m
+[1mnew file mode 100644[m
+[1mindex 0000000..df6f0b4[m
+Binary files /dev/null and b/bin/Debug/net5.0/DIO.bank.dll differ
+[1mdiff --git a/bin/Debug/net5.0/DIO.bank.exe b/bin/Debug/net5.0/DIO.bank.exe[m
+[1mnew file mode 100644[m
+[1mindex 0000000..edf2ad0[m
+Binary files /dev/null and b/bin/Debug/net5.0/DIO.bank.exe differ
+[1mdiff --git a/bin/Debug/net5.0/DIO.bank.pdb b/bin/Debug/net5.0/DIO.bank.pdb[m
+[1mnew file mode 100644[m
+[1mindex 0000000..a0e5af6[m
+Binary files /dev/null and b/bin/Debug/net5.0/DIO.bank.pdb differ
+[1mdiff --git a/bin/Debug/net5.0/DIO.bank.runtimeconfig.dev.json b/bin/Debug/net5.0/DIO.bank.runtimeconfig.dev.json[m
+[1mnew file mode 100644[m
+[1mindex 0000000..52c986b[m
+[1m--- /dev/null[m
+[1m+++ b/bin/Debug/net5.0/DIO.bank.runtimeconfig.dev.json[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32m{[m
+[32m+[m[32m  "runtimeOptions": {[m
+[32m+[m[32m    "additionalProbingPaths": [[m
+[32m+[m[32m      "C:\\Users\\Lucas Rodrigues\\.dotnet\\store\\|arch|\\|tfm|",[m
+[32m+[m[32m      "C:\\Users\\Lucas Rodrigues\\.nuget\\packages"[m
+[32m+[m[32m    ][m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/bin/Debug/net5.0/DIO.bank.runtimeconfig.json b/bin/Debug/net5.0/DIO.bank.runtimeconfig.json[m
+[1mnew file mode 100644[m
+[1mindex 0000000..a8e7e82[m
+[1m--- /dev/null[m
+[1m+++ b/bin/Debug/net5.0/DIO.bank.runtimeconfig.json[m
+[36m@@ -0,0 +1,9 @@[m
+[32m+[m[32m{[m
+[32m+[m[32m  "runtimeOptions": {[m
+[32m+[m[32m    "tfm": "net5.0",[m
+[32m+[m[32m    "framework": {[m
+[32m+[m[32m      "name": "Microsoft.NETCore.App",[m
+[32m+[m[32m      "version": "5.0.0"[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/bin/Debug/net5.0/ref/DIO.bank.dll b/bin/Debug/net5.0/ref/DIO.bank.dll[m
+[1mnew file mode 100644[m
+[1mindex 0000000..a644df5[m
+Binary files /dev/null and b/bin/Debug/net5.0/ref/DIO.bank.dll differ
+[1mdiff --git a/obj/DIO.bank.csproj.nuget.dgspec.json b/obj/DIO.bank.csproj.nuget.dgspec.json[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c9c5742[m
+[1m--- /dev/null[m
+[1m+++ b/obj/DIO.bank.csproj.nuget.dgspec.json[m
+[36m@@ -0,0 +1,60 @@[m
+[32m+[m[32m{[m
+[32m+[m[32m  "format": 1,[m
+[32m+[m[32m  "restore": {[m
+[32m+[m[32m    "C:\\Workspace\\DigitalInnovationOne\\DIO.bank\\DIO.bank.csproj": {}[m
+[32m+[m[32m  },[m
+[32m+[m[32m  "projects": {[m
+[32m+[m[32m    "C:\\Workspace\\DigitalInnovationOne\\DIO.bank\\DIO.bank.csproj": {[m
+[32m+[m[32m      "version": "1.0.0",[m
+[32m+[m[32m      "restore": {[m
+[32m+[m[32m        "projectUniqueName": "C:\\Workspace\\DigitalInnovationOne\\DIO.bank\\DIO.bank.csproj",[m
+[32m+[m[32m        "projectName": "DIO.bank",[m
+[32m+[m[32m        "projectPath": "C:\\Workspace\\DigitalInnovationOne\\DIO.bank\\DIO.bank.csproj",[m
+[32m+[m[32m        "packagesPath": "C:\\Users\\Lucas Rodrigues\\.nuget\\packages\\",[m
+[32m+[m[32m        "outputPath": "C:\\Workspace\\DigitalInnovationOne\\DIO.bank\\obj\\",[m
+[32m+[m[32m        "projectStyle": "PackageReference",[m
+[32m+[m[32m        "configFilePaths": [[m
+[32m+[m[32m          "C:\\Users\\Lucas Rodrigues\\AppData\\Roaming\\NuGet\\NuGet.Config"[m
+[32m+[m[32m        ],[m
+[32m+[m[32m        "originalTargetFrameworks": [[m
+[32m+[m[32m          "net5.0"[m
+[32m+[m[32m        ],[m
+[32m+[m[32m        "sources": {[m
+[32m+[m[32m          "https://api.nuget.org/v3/index.json": {}[m
+[32m+[m[32m        },[m
+[32m+[m[32m        "frameworks": {[m
+[32m+[m[32m          "net5.0": {[m
+[32m+[m[32m            "targetAlias": "net5.0",[m
+[32m+[m[32m            "projectReferences": {}[m
+[32m+[m[32m          }[m
+[32m+[m[32m        },[m
+[32m+[m[32m        "warningProperties": {[m
+[32m+[m[32m          "warnAsError": [[m
+[32m+[m[32m            "NU1605"[m
+[32m+[m[32m          ][m
+[32m+[m[32m        }[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "frameworks": {[m
+[32m+[m[32m        "net5.0": {[m
+[32m+[m[32m          "targetAlias": "net5.0",[m
+[32m+[m[32m          "imports": [[m
+[32m+[m[32m            "net461",[m
+[32m+[m[32m            "net462",[m
+[32m+[m[32m            "net47",[m
+[32m+[m[32m            "net471",[m
+[32m+[m[32m            "net472",[m
+[32m+[m[32m            "net48"[m
+[32m+[m[32m          ],[m
+[32m+[m[32m          "assetTargetFallback": true,[m
+[32m+[m[32m          "warn": true,[m
+[32m+[m[32m          "frameworkReferences": {[m
+[32m+[m[32m            "Microsoft.NETCore.App": {[m
+[32m+[m[32m              "privateAssets": "all"[m
+[32m+[m[32m            }[m
+[32m+[m[32m          },[m
+[32m+[m[32m          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/obj/DIO.bank.csproj.nuget.g.props b/obj/DIO.bank.csproj.nuget.g.props[m
+[1mnew file mode 100644[m
+[1mindex 0000000..170713d[m
+[1m--- /dev/null[m
+[1m+++ b/obj/DIO.bank.csproj.nuget.g.props[m
+[36m@@ -0,0 +1,18 @@[m
+[32m+[m[32m﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>[m
+[32m+[m[32m<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">[m
+[32m+[m[32m  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">[m
+[32m+[m[32m    <RestoreSuccess Condition=" '$(RestoreSuccess)' == '' ">True</RestoreSuccess>[m
+[32m+[m[32m    <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>[m
+[32m+[m[32m    <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>[m
+[32m+[m[32m    <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>[m
+[32m+[m[32m    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\Lucas Rodrigues\.nuget\packages\</NuGetPackageFolders>[m
+[32m+[m[32m    <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>[m
+[32m+[m[32m    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">5.9.0</NuGetToolVersion>[m
+[32m+[m[32m  </PropertyGroup>[m
+[32m+[m[32m  <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">[m
+[32m+[m[32m    <SourceRoot Include="C:\Users\Lucas Rodrigues\.nuget\packages\" />[m
+[32m+[m[32m  </ItemGroup>[m
+[32m+[m[32m  <PropertyGroup>[m
+[32m+[m[32m    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>[m
+[32m+[m[32m  </PropertyGroup>[m
+[32m+[m[32m</Project>[m
+\ No newline at end of file[m
+[1mdiff --git a/obj/DIO.bank.csproj.nuget.g.targets b/obj/DIO.bank.csproj.nuget.g.targets[m
+[1mnew file mode 100644[m
+[1mindex 0000000..53cfaa1[m
+[1m--- /dev/null[m
+[1m+++ b/obj/DIO.bank.csproj.nuget.g.targets[m
+[36m@@ -0,0 +1,6 @@[m
+[32m+[m[32m﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>[m
+[32m+[m[32m<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">[m
+[32m+[m[32m  <PropertyGroup>[m
+[32m+[m[32m    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>[m
+[32m+[m[32m  </PropertyGroup>[m
+[32m+[m[32m</Project>[m
+\ No newline at end of file[m
+[1mdiff --git a/obj/Debug/net5.0/.NETCoreApp,Version=v5.0.AssemblyAttributes.cs b/obj/Debug/net5.0/.NETCoreApp,Version=v5.0.AssemblyAttributes.cs[m
+[1mnew file mode 100644[m
+[1mindex 0000000..2f7e5ec[m
+[1m--- /dev/null[m
+[1m+++ b/obj/Debug/net5.0/.NETCoreApp,Version=v5.0.AssemblyAttributes.cs[m
+[36m@@ -0,0 +1,4 @@[m
+[32m+[m[32m// <autogenerated />[m
+[32m+[m[32musing System;[m
+[32m+[m[32musing System.Reflection;[m
+[32m+[m[32m[assembly: global::System.Runtime.Versioning.TargetFrameworkAttribute(".NETCoreApp,Version=v5.0", FrameworkDisplayName = "")][m
+[1mdiff --git a/obj/Debug/net5.0/DIO.bank.AssemblyInfo.cs b/obj/Debug/net5.0/DIO.bank.AssemblyInfo.cs[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c33a491[m
+[1m--- /dev/null[m
+[1m+++ b/obj/Debug/net5.0/DIO.bank.AssemblyInfo.cs[m
+[36m@@ -0,0 +1,23 @@[m
+[32m+[m[32m//------------------------------------------------------------------------------[m
+[32m+[m[32m// <auto-generated>[m
+[32m+[m[32m//     O código foi gerado por uma ferramenta.[m
+[32m+[m[32m//     Versão de Tempo de Execução:4.0.30319.42000[m
+[32m+[m[32m//[m
+[32m+[m[32m//     As alterações ao arquivo poderão causar comportamento incorreto e serão perdidas se[m
+[32m+[m[32m//     o código for gerado novamente.[m
+[32m+[m[32m// </auto-generated>[m
+[32m+[m[32m//------------------------------------------------------------------------------[m
+[32m+[m
+[32m+[m[32musing System;[m
+[32m+[m[32musing System.Reflection;[m
+[32m+[m
+[32m+[m[32m[assembly: System.Reflection.AssemblyCompanyAttribute("DIO.bank")][m
+[32m+[m[32m[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")][m
+[32m+[m[32m[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")][m
+[32m+[m[32m[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")][m
+[32m+[m[32m[assembly: System.Reflection.AssemblyProductAttribute("DIO.bank")][m
+[32m+[m[32m[assembly: System.Reflection.AssemblyTitleAttribute("DIO.bank")][m
+[32m+[m[32m[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")][m
+[32m+[m
+[32m+[m[32m// Generated by the MSBuild WriteCodeFragment class.[m
+[32m+[m
+[1mdiff --git a/obj/Debug/net5.0/DIO.bank.AssemblyInfoInputs.cache b/obj/Debug/net5.0/DIO.bank.AssemblyInfoInputs.cache[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f7fcc0b[m
+[1m--- /dev/null[m
+[1m+++ b/obj/Debug/net5.0/DIO.bank.AssemblyInfoInputs.cache[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32m8696fd868bd3b55b6aeba2a9493e649020da7a08[m
+[1mdiff --git a/obj/Debug/net5.0/DIO.bank.GeneratedMSBuildEditorConfig.editorconfig b/obj/Debug/net5.0/DIO.bank.GeneratedMSBuildEditorConfig.editorconfig[m
+[1mnew file mode 100644[m
+[1mindex 0000000..d7e2983[m
+[1m--- /dev/null[m
+[1m+++ b/obj/Debug/net5.0/DIO.bank.GeneratedMSBuildEditorConfig.editorconfig[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32mis_global = true[m
+[32m+[m[32mbuild_property.TargetFramework = net5.0[m
+[32m+[m[32mbuild_property.TargetPlatformMinVersion =[m[41m [m
+[32m+[m[32mbuild_property.UsingMicrosoftNETSdkWeb =[m[41m [m
+[32m+[m[32mbuild_property.ProjectTypeGuids =[m[41m [m
+[32m+[m[32mbuild_property.PublishSingleFile =[m[41m [m
+[32m+[m[32mbuild_property.IncludeAllContentForSelfExtract =[m[41m [m
+[32m+[m[32mbuild_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows[m
+[1mdiff --git a/obj/Debug/net5.0/DIO.bank.assets.cache b/obj/Debug/net5.0/DIO.bank.assets.cache[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ac878ae[m
+Binary files /dev/null and b/obj/Debug/net5.0/DIO.bank.assets.cache differ
+[1mdiff --git a/obj/Debug/net5.0/DIO.bank.csproj.CoreCompileInputs.cache b/obj/Debug/net5.0/DIO.bank.csproj.CoreCompileInputs.cache[m
+[1mnew file mode 100644[m
+[1mindex 0000000..9a8222e[m
+[1m--- /dev/null[m
+[1m+++ b/obj/Debug/net5.0/DIO.bank.csproj.CoreCompileInputs.cache[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32mf9525586c68a256cf3646f644e6f23004bea7b67[m
+[1mdiff --git a/obj/Debug/net5.0/DIO.bank.csproj.FileListAbsolute.txt b/obj/Debug/net5.0/DIO.bank.csproj.FileListAbsolute.txt[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ac76a0e[m
+[1m--- /dev/null[m
+[1m+++ b/obj/Debug/net5.0/DIO.bank.csproj.FileListAbsolute.txt[m
+[36m@@ -0,0 +1,16 @@[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\obj\Debug\net5.0\DIO.bank.csprojAssemblyReference.cache[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\obj\Debug\net5.0\DIO.bank.GeneratedMSBuildEditorConfig.editorconfig[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\obj\Debug\net5.0\DIO.bank.AssemblyInfoInputs.cache[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\obj\Debug\net5.0\DIO.bank.AssemblyInfo.cs[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\obj\Debug\net5.0\DIO.bank.csproj.CoreCompileInputs.cache[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\bin\Debug\net5.0\DIO.bank.exe[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\bin\Debug\net5.0\DIO.bank.deps.json[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\bin\Debug\net5.0\DIO.bank.runtimeconfig.json[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\bin\Debug\net5.0\DIO.bank.runtimeconfig.dev.json[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\bin\Debug\net5.0\DIO.bank.dll[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\bin\Debug\net5.0\ref\DIO.bank.dll[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\bin\Debug\net5.0\DIO.bank.pdb[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\obj\Debug\net5.0\DIO.bank.dll[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\obj\Debug\net5.0\ref\DIO.bank.dll[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\obj\Debug\net5.0\DIO.bank.pdb[m
+[32m+[m[32mC:\Workspace\DigitalInnovationOne\DIO.bank\obj\Debug\net5.0\DIO.bank.genruntimeconfig.cache[m
+[1mdiff --git a/obj/Debug/net5.0/DIO.bank.csprojAssemblyReference.cache b/obj/Debug/net5.0/DIO.bank.csprojAssemblyReference.cache[m
+[1mnew file mode 100644[m
+[1mindex 0000000..da3fc11[m
+Binary files /dev/null and b/obj/Debug/net5.0/DIO.bank.csprojAssemblyReference.cache differ
+[1mdiff --git a/obj/Debug/net5.0/DIO.bank.dll b/obj/Debug/net5.0/DIO.bank.dll[m
+[1mnew file mode 100644[m
+[1mindex 0000000..df6f0b4[m
+Binary files /dev/null and b/obj/Debug/net5.0/DIO.bank.dll differ
+[1mdiff --git a/obj/Debug/net5.0/DIO.bank.genruntimeconfig.cache b/obj/Debug/net5.0/DIO.bank.genruntimeconfig.cache[m
+[1mnew file mode 100644[m
+[1mindex 0000000..cd9da7c[m
+[1m--- /dev/null[m
+[1m+++ b/obj/Debug/net5.0/DIO.bank.genruntimeconfig.cache[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32mc99c5ffdf9a0d83d7034d5a06f00be8e3677a0f9[m
+[1mdiff --git a/obj/Debug/net5.0/DIO.bank.pdb b/obj/Debug/net5.0/DIO.bank.pdb[m
+[1mnew file mode 100644[m
+[1mindex 0000000..a0e5af6[m
+Binary files /dev/null and b/obj/Debug/net5.0/DIO.bank.pdb differ
+[1mdiff --git a/obj/Debug/net5.0/apphost.exe b/obj/Debug/net5.0/apphost.exe[m
+[1mnew file mode 100644[m
+[1mindex 0000000..edf2ad0[m
+Binary files /dev/null and b/obj/Debug/net5.0/apphost.exe differ
+[1mdiff --git a/obj/Debug/net5.0/ref/DIO.bank.dll b/obj/Debug/net5.0/ref/DIO.bank.dll[m
+[1mnew file mode 100644[m
+[1mindex 0000000..a644df5[m
+Binary files /dev/null and b/obj/Debug/net5.0/ref/DIO.bank.dll differ
+[1mdiff --git a/obj/project.assets.json b/obj/project.assets.json[m
+[1mnew file mode 100644[m
+[1mindex 0000000..8ef5006[m
+[1m--- /dev/null[m
+[1m+++ b/obj/project.assets.json[m
+[36m@@ -0,0 +1,65 @@[m
+[32m+[m[32m{[m
+[32m+[m[32m  "version": 3,[m
+[32m+[m[32m  "targets": {[m
+[32m+[m[32m    "net5.0": {}[m
+[32m+[m[32m  },[m
+[32m+[m[32m  "libraries": {},[m
+[32m+[m[32m  "projectFileDependencyGroups": {[m
+[32m+[m[32m    "net5.0": [][m
+[32m+[m[32m  },[m
+[32m+[m[32m  "packageFolders": {[m
+[32m+[m[32m    "C:\\Users\\Lucas Rodrigues\\.nuget\\packages\\": {}[m
+[32m+[m[32m  },[m
+[32m+[m[32m  "project": {[m
+[32m+[m[32m    "version": "1.0.0",[m
+[32m+[m[32m    "restore": {[m
+[32m+[m[32m      "projectUniqueName": "C:\\Workspace\\DigitalInnovationOne\\DIO.bank\\DIO.bank.csproj",[m
+[32m+[m[32m      "projectName": "DIO.bank",[m
+[32m+[m[32m      "projectPath": "C:\\Workspace\\DigitalInnovationOne\\DIO.bank\\DIO.bank.csproj",[m
+[32m+[m[32m      "packagesPath": "C:\\Users\\Lucas Rodrigues\\.nuget\\packages\\",[m
+[32m+[m[32m      "outputPath": "C:\\Workspace\\DigitalInnovationOne\\DIO.bank\\obj\\",[m
+[32m+[m[32m      "projectStyle": "PackageReference",[m
+[32m+[m[32m      "configFilePaths": [[m
+[32m+[m[32m        "C:\\Users\\Lucas Rodrigues\\AppData\\Roaming\\NuGet\\NuGet.Config"[m
+[32m+[m[32m      ],[m
+[32m+[m[32m      "originalTargetFrameworks": [[m
+[32m+[m[32m        "net5.0"[m
+[32m+[m[32m      ],[m
+[32m+[m[32m      "sources": {[m
+[32m+[m[32m        "https://api.nuget.org/v3/index.json": {}[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "frameworks": {[m
+[32m+[m[32m        "net5.0": {[m
+[32m+[m[32m          "targetAlias": "net5.0",[m
+[32m+[m[32m          "projectReferences": {}[m
+[32m+[m[32m        }[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "warningProperties": {[m
+[32m+[m[32m        "warnAsError": [[m
+[32m+[m[32m          "NU1605"[m
+[32m+[m[32m        ][m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "frameworks": {[m
+[32m+[m[32m      "net5.0": {[m
+[32m+[m[32m        "targetAlias": "net5.0",[m
+[32m+[m[32m        "imports": [[m
+[32m+[m[32m          "net461",[m
+[32m+[m[32m          "net462",[m
+[32m+[m[32m          "net47",[m
+[32m+[m[32m          "net471",[m
+[32m+[m[32m          "net472",[m
+[32m+[m[32m          "net48"[m
+[32m+[m[32m        ],[m
+[32m+[m[32m        "assetTargetFallback": true,[m
+[32m+[m[32m        "warn": true,[m
+[32m+[m[32m        "frameworkReferences": {[m
+[32m+[m[32m          "Microsoft.NETCore.App": {[m
+[32m+[m[32m            "privateAssets": "all"[m
+[32m+[m[32m          }[m
+[32m+[m[32m        },[m
+[32m+[m[32m        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/obj/project.nuget.cache b/obj/project.nuget.cache[m
+[1mnew file mode 100644[m
+[1mindex 0000000..a29f3dc[m
+[1m--- /dev/null[m
+[1m+++ b/obj/project.nuget.cache[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32m{[m
+[32m+[m[32m  "version": 2,[m
+[32m+[m[32m  "dgSpecHash": "a6Zipy5uGcdi7v+F92vWs1imRT7e4OwV4QR50HKcoyr1Kuix5HiFtevWKhrDPgb7s2GIH6Q4Lg0Dwl5a5Hyjxg==",[m
+[32m+[m[32m  "success": true,[m
+[32m+[m[32m  "projectFilePath": "C:\\Workspace\\DigitalInnovationOne\\DIO.bank\\DIO.bank.csproj",[m
+[32m+[m[32m  "expectedPackageFiles": [],[m
+[32m+[m[32m  "logs": [][m
+[32m+[m[32m}[m
+\ No newline at end of file[m
